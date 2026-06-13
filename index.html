@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rong Zhao</title>
+  <meta name="description" content="Rong Zhao's academic homepage. Research interests include large language models for urban and social science, agentic AI, and vision-language models.">
+  <style>
+    :root {
+      --text: #111;
+      --muted: #333;
+      --link: #1772d0;
+      --border: #ddd;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #fff;
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 16px;
+      line-height: 1.45;
+    }
+
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 46px 30px 62px;
+    }
+
+    a {
+      color: var(--link);
+      text-decoration: none;
+    }
+
+    a:hover,
+    a:focus {
+      text-decoration: underline;
+    }
+
+    .intro {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 184px;
+      gap: 34px;
+      align-items: start;
+    }
+
+    h1 {
+      margin: 0 0 18px;
+      font-size: 32px;
+      font-weight: 400;
+      line-height: 1.15;
+    }
+
+    .bio p {
+      margin: 0 0 12px;
+      line-height: 1.55;
+    }
+
+    .links {
+      margin-top: 15px;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .portrait {
+      width: 184px;
+      height: 184px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      object-fit: cover;
+      object-position: 54% 42%;
+      display: block;
+    }
+
+    h2 {
+      margin: 36px 0 18px;
+      font-size: 22px;
+      font-weight: 400;
+      line-height: 1.2;
+    }
+
+    .publication {
+      display: grid;
+      grid-template-columns: 190px minmax(0, 1fr);
+      gap: 20px;
+      align-items: start;
+      margin-bottom: 24px;
+    }
+
+    .publication img {
+      width: 190px;
+      height: 118px;
+      display: block;
+      object-fit: contain;
+      background: #fff;
+      border: 1px solid var(--border);
+    }
+
+    .paper-title {
+      margin: 0 0 5px;
+      font-size: 16px;
+      line-height: 1.32;
+    }
+
+    .authors,
+    .venue,
+    .paper-links {
+      margin: 0 0 4px;
+      font-size: 14px;
+      line-height: 1.42;
+    }
+
+    .venue {
+      color: var(--muted);
+    }
+
+    @media (max-width: 620px) {
+      main {
+        padding: 30px 22px 44px;
+      }
+
+      .intro {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+
+      .portrait {
+        width: 150px;
+        height: 150px;
+        order: -1;
+      }
+
+      .publication {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .publication img {
+        width: 100%;
+        height: auto;
+        max-height: 230px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="intro" aria-label="Biography">
+      <div class="bio">
+        <h1>Rong Zhao (&#36213;&#23481;)</h1>
+        <p>Hi! I am Rong Zhao, an MRes student at University College London, expected to complete my degree in Fall 2026.</p>
+        <p>My research interests include large language models for urban and social science, agentic AI, and vision-language models.</p>
+        <p>I am currently seeking Ph.D. opportunities for Spring/Fall 2027 in related areas.</p>
+        <p class="links">
+          <a href="mailto:zhaorong8007@gmail.com">Email</a>
+          &nbsp;/&nbsp;
+          <a href="https://scholar.google.com/citations?user=O7AIej0AAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>
+          &nbsp;/&nbsp;
+          <a href="https://github.com/jameslemon2002" target="_blank" rel="noopener">GitHub</a>
+        </p>
+      </div>
+      <img class="portrait" src="assets/portrait.jpg" alt="Rong Zhao portrait">
+    </section>
+
+    <section aria-labelledby="selected-papers">
+      <h2 id="selected-papers">Selected Papers</h2>
+
+      <article class="publication">
+        <img src="assets/paper-culturally-uneven-urban-perception.png" alt="Figure for Culturally Uneven Urban Perception in Large Language Models">
+        <div>
+          <p class="paper-title">Culturally Uneven Urban Perception in Large Language Models</p>
+          <p class="authors"><strong>Rong Zhao</strong>, W. Liu, Z. Sha, N. Su, Y. Zhang, Y. Long</p>
+          <p class="venue">Under review at Nature Cities, 2026</p>
+          <p class="paper-links"><a href="https://doi.org/10.48550/arXiv.2604.20048" target="_blank" rel="noopener">preprint</a></p>
+        </div>
+      </article>
+
+      <article class="publication">
+        <img src="assets/paper-genai-urban-science.png" alt="Figure for GenAI Models Capture Urban Science but Oversimplify Complexity">
+        <div>
+          <p class="paper-title">GenAI Models Capture Urban Science but Oversimplify Complexity</p>
+          <p class="authors">Y. Zhang, <strong>Rong Zhao</strong>, Z. Huang, X. Wang, Y. Ma, Y. Long</p>
+          <p class="venue">Under review at Nature Communications, 2025</p>
+          <p class="paper-links"><a href="https://doi.org/10.48550/arXiv.2505.13803" target="_blank" rel="noopener">preprint</a></p>
+        </div>
+      </article>
+
+      <article class="publication">
+        <img src="assets/paper-urbanalign.png" alt="Figure for UrbanAlign: Post-hoc Semantic Calibration for VLM-Human Preference Alignment">
+        <div>
+          <p class="paper-title">UrbanAlign: Post-hoc Semantic Calibration for VLM-Human Preference Alignment</p>
+          <p class="authors">Y. Zhang, <strong>Rong Zhao</strong>, Z. Sha, Y. Li, L. Wang, C. Hou, W. Ji, H. Huang, Y. Wan, J. Yu, J. Xia, Y. Zhang, C. Shi</p>
+          <p class="venue">Under review at ECCV, 2026</p>
+          <p class="paper-links"><a href="https://doi.org/10.48550/arXiv.2602.19442" target="_blank" rel="noopener">preprint</a></p>
+        </div>
+      </article>
+    </section>
+  </main>
+</body>
+</html>
