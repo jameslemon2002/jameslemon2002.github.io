@@ -119,6 +119,59 @@
       color: var(--muted);
     }
 
+    .visitors {
+      margin-top: 36px;
+    }
+
+    .visitor-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 10px;
+    }
+
+    .visitor-metrics {
+      color: var(--muted);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .visitor-metric strong {
+      color: var(--text);
+      font-size: 15px;
+      font-weight: 400;
+    }
+
+    .visitor-map {
+      margin-top: 4px;
+      max-width: 650px;
+      position: relative;
+    }
+
+    .visitor-map-image {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 2px;
+    }
+
+    .map-dot {
+      position: absolute;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #1769c2;
+      box-shadow: 0 0 0 4px rgba(23, 105, 194, 0.16);
+      transform: translate(-50%, -50%);
+    }
+
+    .map-dot.small {
+      width: 5px;
+      height: 5px;
+      box-shadow: 0 0 0 3px rgba(23, 105, 194, 0.15);
+    }
+
     @media (max-width: 620px) {
       main {
         padding: 30px 22px 44px;
@@ -144,6 +197,12 @@
         width: 100%;
         height: auto;
         max-height: 230px;
+      }
+
+      .visitor-head {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 4px;
       }
     }
   </style>
@@ -199,6 +258,25 @@
           <p class="paper-links"><a href="https://doi.org/10.48550/arXiv.2505.13803" target="_blank" rel="noopener">preprint</a></p>
         </div>
       </article>
+    </section>
+
+    <section class="visitors" aria-labelledby="visitors">
+      <div class="visitor-head">
+        <h2 id="visitors">Visitors</h2>
+        <div class="visitor-metrics" aria-label="Visitor summary">
+          <span class="visitor-metric"><strong>--</strong> visits</span>
+        </div>
+      </div>
+
+      <div class="visitor-map" aria-label="Visitor map preview based on Natural Earth shaded relief">
+        <img class="visitor-map-image" src="assets/visitor-map-robinson.jpg" alt="Natural Earth shaded relief world map in Robinson projection">
+        <span class="map-dot" style="left:49.98%;top:18.22%" title="London"></span>
+        <span class="map-dot small" style="left:31.12%;top:24.78%" title="New York"></span>
+        <span class="map-dot" style="left:79.81%;top:25.27%" title="Beijing"></span>
+        <span class="map-dot small" style="left:86.48%;top:27.87%" title="Tokyo"></span>
+        <span class="map-dot small" style="left:89.77%;top:71.02%" title="Sydney"></span>
+        <span class="map-dot small" style="left:78.83%;top:49.16%" title="Singapore"></span>
+      </div>
     </section>
   </main>
 </body>
