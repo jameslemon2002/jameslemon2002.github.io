@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="RZ monogram">
+  <rect width="64" height="64" rx="18" fill="#17231f"/>
+  <path d="M16 45V18h11.1c6.6 0 10.7 3.5 10.7 9 0 3.8-2.1 6.7-5.8 8l7.3 10h-7.1l-6.1-8.8h-4V45H16Zm6.1-13.8h4.3c3.3 0 5.2-1.4 5.2-4.1 0-2.7-1.9-4-5.2-4h-4.3v8.1Z" fill="#fffdf8"/>
+  <path d="M39 45v-4.1l10.1-16.8h-9.8V19h17v4.1L46.2 39.9h10.4V45H39Z" fill="#8fd0bd"/>
+</svg>

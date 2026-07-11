@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jameslemon2002.github.io/sitemap.xml
