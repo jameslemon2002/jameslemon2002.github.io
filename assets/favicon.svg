@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Lemon">
-  <rect width="32" height="32" fill="#fff"/>
-  <g fill="none" stroke="#111" stroke-width="1.7" stroke-linecap="square" stroke-linejoin="miter">
-    <path fill="#f5d400" d="m2.5 16 2.9-1.8C6.5 9.1 10.6 5.5 16 5.5s9.5 3.6 10.6 8.7l2.9 1.8-2.9 1.8c-1.1 5.1-5.2 8.7-10.6 8.7s-9.5-3.6-10.6-8.7L2.5 16Z"/>
-    <path d="m29.1 15.8-2.9-3.9"/>
-    <path fill="#5f8f3e" d="M26.2 11.9c-3.8-.2-6.3-2.2-7.1-5.7 3.8.1 6.3 2 7.1 5.7Z"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="lemon-title">
+  <title id="lemon-title">Lemon</title>
+  <g transform="rotate(-25 32 32)">
+    <path fill="#ffd51f" stroke="#161616" stroke-width="2.8" stroke-linejoin="round" d="m4 32 6-4c2-8 11-13 22-13s20 5 22 13l6 4-6 4c-2 8-11 13-22 13S12 44 10 36l-6-4Z"/>
   </g>
+  <path fill="none" stroke="#161616" stroke-width="2.8" stroke-linecap="round" d="m56.5 20.5-2.8-2.8"/>
+  <path fill="#5c913b" stroke="#161616" stroke-width="2.8" stroke-linejoin="round" d="M53.8 17.8c-7.8-.2-12.8-3.6-15-9.7 7.9-.6 13.1 2.6 15 9.7Z"/>
 </svg>
