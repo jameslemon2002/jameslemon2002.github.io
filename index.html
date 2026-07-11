@@ -3,20 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Rong Zhao (赵容) | Urban AI Researcher</title>
-  <meta name="description" content="Rong Zhao is an MRes researcher at University College London and a Tsinghua University architecture graduate, working on urban AI, agentic AI, and vision-language models.">
+  <title>Rong Zhao (赵容)</title>
+  <meta name="description" content="Rong Zhao is an MRes student at University College London and a Tsinghua University architecture graduate researching urban AI, agentic AI, and vision-language models.">
   <meta name="author" content="Rong Zhao">
   <meta name="robots" content="index, follow">
-  <meta name="theme-color" content="#f3f0e8">
+  <meta name="theme-color" content="#ffffff">
+
   <script>
     (() => {
       document.documentElement.classList.add('js');
       try {
-        const savedTheme = localStorage.getItem('theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const theme = savedTheme === 'light' || savedTheme === 'dark'
-          ? savedTheme
-          : prefersDark ? 'dark' : 'light';
+        const theme = localStorage.getItem('rz-theme') === 'dark' ? 'dark' : 'light';
         document.documentElement.dataset.theme = theme;
         document.documentElement.style.colorScheme = theme;
       } catch (_) {
@@ -24,21 +21,19 @@
       }
     })();
   </script>
+
   <link rel="canonical" href="https://jameslemon2002.github.io/">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preload" href="assets/portrait.jpg" as="image" type="image/jpeg">
 
   <meta property="og:type" content="website">
   <meta property="og:locale" content="en_GB">
-  <meta property="og:title" content="Rong Zhao (赵容) | Urban AI Researcher">
-  <meta property="og:description" content="MRes researcher at UCL exploring large language models for urban and social science, agentic AI, and vision-language models.">
+  <meta property="og:title" content="Rong Zhao (赵容)">
+  <meta property="og:description" content="MRes student at UCL researching urban AI, agentic AI, and vision-language models.">
   <meta property="og:url" content="https://jameslemon2002.github.io/">
   <meta property="og:image" content="https://jameslemon2002.github.io/assets/portrait.jpg">
   <meta property="og:image:alt" content="Portrait of Rong Zhao">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Rong Zhao (赵容) | Urban AI Researcher">
-  <meta name="twitter:description" content="Urban AI, agentic AI, and vision-language model research.">
-  <meta name="twitter:image" content="https://jameslemon2002.github.io/assets/portrait.jpg">
 
   <script type="application/ld+json">
     {
@@ -57,13 +52,6 @@
         "@type": "CollegeOrUniversity",
         "name": "Tsinghua University"
       },
-      "knowsAbout": [
-        "Urban AI",
-        "Large language models",
-        "Agentic AI",
-        "Vision-language models",
-        "Urban and social science"
-      ],
       "sameAs": [
         "https://scholar.google.com/citations?user=O7AIej0AAAAJ&hl=en",
         "https://github.com/jameslemon2002"
@@ -74,51 +62,21 @@
   <style>
     :root {
       color-scheme: light;
-      --page: #f3f0e8;
-      --surface: #fffdf8;
-      --surface-soft: rgba(255, 253, 248, 0.72);
-      --ink: #17231f;
-      --muted: #64706b;
-      --faint: #8b948f;
-      --line: #d8ddd7;
-      --accent: #0b6b5a;
-      --accent-dark: #075144;
-      --accent-soft: #dcebe5;
-      --accent-glow: rgba(11, 107, 90, 0.09);
-      --focus-ring: rgba(11, 107, 90, 0.35);
-      --header: rgba(243, 240, 232, 0.97);
-      --brand-bg: #17231f;
-      --brand-ink: #fff;
-      --on-accent: #fff;
-      --contact-bg: #17231f;
-      --contact-ink: #fff;
-      --warm: #c66f3e;
-      --shadow: 0 20px 55px rgba(29, 44, 38, 0.09);
-      --radius: 24px;
-      --max-width: 1120px;
+      --background: #ffffff;
+      --text: #111111;
+      --muted: #686868;
+      --line: #dddddd;
+      --image-background: #ffffff;
+      --max-width: 880px;
     }
 
     :root[data-theme="dark"] {
       color-scheme: dark;
-      --page: #0f1513;
-      --surface: #161f1b;
-      --surface-soft: rgba(22, 31, 27, 0.78);
-      --ink: #edf5f1;
-      --muted: #aab8b1;
-      --faint: #7e8e87;
-      --line: #2b3933;
-      --accent: #79cbb5;
-      --accent-dark: #a8e4d3;
-      --accent-soft: #193b32;
-      --accent-glow: rgba(121, 203, 181, 0.08);
-      --focus-ring: rgba(121, 203, 181, 0.42);
-      --header: rgba(15, 21, 19, 0.97);
-      --brand-bg: #79cbb5;
-      --brand-ink: #10201b;
-      --on-accent: #0c1d17;
-      --contact-bg: #080f0d;
-      --contact-ink: #f4faf7;
-      --shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+      --background: #111111;
+      --text: #f1f1f1;
+      --muted: #aaaaaa;
+      --line: #383838;
+      --image-background: #ffffff;
     }
 
     *,
@@ -129,142 +87,93 @@
 
     html {
       scroll-behavior: smooth;
-      scroll-padding-top: 92px;
     }
 
     body {
       margin: 0;
-      background:
-        radial-gradient(circle at 88% 3%, var(--accent-glow), transparent 26rem),
-        var(--page);
-      color: var(--ink);
-      font-family: "Avenir Next", Avenir, "Segoe UI", Helvetica, Arial, sans-serif;
-      font-size: 16px;
+      background: var(--background);
+      color: var(--text);
+      font-family: Inter, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 15px;
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
-      transition: background-color 180ms ease, color 180ms ease;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+
+    a:hover {
+      text-decoration-thickness: 2px;
+    }
+
+    a:focus-visible,
+    button:focus-visible {
+      outline: 2px solid currentColor;
+      outline-offset: 3px;
     }
 
     img {
       max-width: 100%;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    a:focus-visible,
-    button:focus-visible {
-      outline: 3px solid var(--focus-ring);
-      outline-offset: 4px;
-      border-radius: 4px;
-    }
-
     .shell {
-      width: min(calc(100% - 48px), var(--max-width));
+      width: min(calc(100% - 40px), var(--max-width));
       margin-inline: auto;
     }
 
-    .skip-link {
-      position: fixed;
-      top: 12px;
-      left: 12px;
-      z-index: 100;
-      padding: 10px 14px;
-      border-radius: 999px;
-      background: var(--ink);
-      color: var(--page);
-      transform: translateY(-150%);
-      transition: transform 160ms ease;
-    }
-
-    .skip-link:focus {
-      transform: translateY(0);
-    }
-
     .site-header {
-      position: sticky;
-      top: 0;
-      z-index: 50;
       border-bottom: 1px solid var(--line);
-      background: var(--header);
-      transition: background-color 180ms ease, border-color 180ms ease;
     }
 
-    .header-inner {
-      min-height: 72px;
+    .header-row {
+      min-height: 64px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 30px;
+      gap: 24px;
     }
 
     .brand {
       display: inline-flex;
       align-items: center;
-      gap: 11px;
+      gap: 10px;
+      color: var(--text);
+      font-size: 15px;
       font-weight: 650;
-      letter-spacing: -0.01em;
+      text-decoration: none;
     }
 
-    .brand-mark {
-      width: 38px;
-      height: 38px;
-      display: grid;
-      place-items: center;
-      border-radius: 12px;
-      background: var(--brand-bg);
-      color: var(--brand-ink);
-      font-size: 13px;
-      letter-spacing: 0.06em;
-    }
-
-    .site-nav {
-      display: flex;
-      align-items: center;
-      gap: 26px;
-      color: var(--muted);
-      font-size: 14px;
-      font-weight: 550;
-    }
-
-    .site-nav a {
-      transition: color 150ms ease;
-    }
-
-    .site-nav a:hover {
-      color: var(--accent);
+    .lemon-logo {
+      width: 28px;
+      height: 28px;
+      display: block;
+      flex: 0 0 auto;
     }
 
     .theme-toggle {
-      width: 40px;
-      height: 40px;
+      width: 34px;
+      height: 34px;
       padding: 0;
       display: none;
       place-items: center;
-      flex: 0 0 auto;
       border: 1px solid var(--line);
-      border-radius: 50%;
-      background: var(--surface-soft);
-      color: var(--ink);
+      border-radius: 0;
+      background: transparent;
+      color: var(--text);
       cursor: pointer;
-      transition: transform 160ms ease, border-color 160ms ease, color 160ms ease, background-color 180ms ease;
     }
 
     .js .theme-toggle {
       display: grid;
     }
 
-    .theme-toggle:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-      transform: translateY(-2px);
-    }
-
     .theme-icon {
-      width: 18px;
-      height: 18px;
+      width: 16px;
+      height: 16px;
       display: block;
     }
 
@@ -280,47 +189,16 @@
       display: none;
     }
 
-    .site-nav .nav-cta {
-      padding: 8px 14px;
-      border: 1px solid var(--ink);
-      border-radius: 999px;
-      color: var(--ink);
+    main {
+      padding-bottom: 56px;
     }
 
-    .site-nav .nav-cta:hover {
-      border-color: var(--accent);
-      background: var(--accent);
-      color: var(--on-accent);
-    }
-
-    .hero {
-      min-height: calc(100vh - 72px);
-      padding-block: 72px 68px;
+    .intro {
+      padding-block: 50px 42px;
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(290px, 365px);
-      align-items: center;
-      gap: clamp(48px, 8vw, 96px);
-    }
-
-    .eyebrow {
-      margin: 0 0 24px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      color: var(--accent-dark);
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    .eyebrow::before {
-      content: "";
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 0 5px var(--accent-soft);
+      grid-template-columns: minmax(0, 1fr) 184px;
+      gap: 50px;
+      align-items: start;
     }
 
     h1,
@@ -331,605 +209,206 @@
     }
 
     h1 {
-      max-width: 700px;
-      margin-bottom: 28px;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(52px, 6.7vw, 80px);
-      font-weight: 400;
-      letter-spacing: -0.055em;
-      line-height: 0.98;
+      margin-bottom: 20px;
+      font-size: 30px;
+      font-weight: 650;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
     }
 
-    h1 em {
-      color: var(--accent);
-      font-weight: 400;
+    .bio p {
+      max-width: 610px;
+      margin-bottom: 11px;
     }
 
-    .lede {
-      max-width: 680px;
-      margin-bottom: 13px;
-      color: var(--ink);
-      font-size: clamp(18px, 2vw, 21px);
-      line-height: 1.6;
-    }
-
-    .background-note {
-      max-width: 650px;
-      margin-bottom: 29px;
-      color: var(--muted);
-    }
-
-    .hero-actions {
+    .profile-links {
+      margin: 20px 0 0;
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
-      margin-bottom: 22px;
-    }
-
-    .button {
-      min-height: 46px;
-      padding: 10px 18px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: var(--surface-soft);
+      gap: 6px 10px;
       font-size: 14px;
-      font-weight: 650;
-      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
     }
 
-    .button:hover {
-      border-color: var(--accent);
-      transform: translateY(-2px);
-    }
-
-    .button-primary {
-      border-color: var(--accent);
-      background: var(--accent);
-      color: var(--on-accent);
-    }
-
-    .button-primary:hover {
-      border-color: var(--accent-dark);
-      background: var(--accent-dark);
-    }
-
-    .availability {
-      margin: 0;
-      display: flex;
-      align-items: center;
-      gap: 9px;
+    .separator {
       color: var(--muted);
-      font-size: 14px;
-    }
-
-    .availability::before {
-      content: "";
-      width: 8px;
-      height: 8px;
-      flex: 0 0 auto;
-      border-radius: 50%;
-      background: #47a16d;
-      box-shadow: 0 0 0 4px rgba(71, 161, 109, 0.14);
-    }
-
-    .portrait-card {
-      margin: 0;
-      padding: 12px;
-      border: 1px solid var(--line);
-      border-radius: 30px;
-      background: var(--surface-soft);
-      box-shadow: var(--shadow);
-      transform: rotate(1.25deg);
+      user-select: none;
     }
 
     .portrait {
-      width: 100%;
-      height: auto;
-      aspect-ratio: 4 / 5;
+      width: 184px;
+      height: 220px;
       display: block;
-      border-radius: 21px;
+      border: 1px solid var(--line);
+      border-radius: 0;
       object-fit: cover;
       object-position: 57% 43%;
     }
 
-    .portrait-card figcaption {
-      padding: 14px 7px 5px;
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      color: var(--muted);
-      font-size: 12px;
-      letter-spacing: 0.02em;
-    }
-
-    .portrait-card figcaption strong {
-      color: var(--ink);
-      font-weight: 650;
-    }
-
     .section {
-      padding-block: 94px;
+      padding-block: 30px 36px;
       border-top: 1px solid var(--line);
     }
 
-    .section-heading {
-      margin-bottom: 48px;
-      display: grid;
-      grid-template-columns: 190px minmax(0, 1fr);
-      gap: 34px;
-      align-items: start;
-    }
-
-    .section-index {
-      margin: 7px 0 0;
-      color: var(--accent);
-      font-size: 12px;
-      font-weight: 750;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-    }
-
-    .section-heading h2 {
-      margin-bottom: 12px;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(36px, 5vw, 52px);
-      font-weight: 400;
-      letter-spacing: -0.035em;
-      line-height: 1.05;
-    }
-
-    .section-heading p:last-child {
-      max-width: 680px;
-      margin-bottom: 0;
-      color: var(--muted);
-      font-size: 17px;
+    h2 {
+      margin-bottom: 18px;
+      font-size: 18px;
+      font-weight: 650;
+      letter-spacing: -0.01em;
+      line-height: 1.3;
     }
 
     .education-list {
-      margin-left: 224px;
       border-top: 1px solid var(--line);
     }
 
-    .education-item {
-      padding-block: 27px;
+    .education-row {
+      padding-block: 14px;
       display: grid;
-      grid-template-columns: 150px minmax(0, 1fr) auto;
-      gap: 24px;
-      align-items: start;
+      grid-template-columns: 135px minmax(0, 1fr);
+      gap: 20px;
       border-bottom: 1px solid var(--line);
     }
 
     .education-date {
-      margin: 2px 0 0;
-      color: var(--faint);
+      margin: 0;
+      color: var(--muted);
       font-size: 13px;
-      font-weight: 650;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
     }
 
     .education-degree {
-      margin: 0 0 3px;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 23px;
-      font-weight: 400;
-      letter-spacing: -0.015em;
-      line-height: 1.3;
+      margin: 0;
+      font-size: 15px;
+      font-weight: 650;
+      line-height: 1.45;
     }
 
     .education-school {
-      margin: 0;
-      color: var(--muted);
-    }
-
-    .status {
-      padding: 5px 9px;
-      border-radius: 999px;
-      background: var(--accent-soft);
-      color: var(--accent-dark);
-      font-size: 11px;
-      font-weight: 750;
-      letter-spacing: 0.08em;
-      line-height: 1.2;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
-    .focus-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
-    }
-
-    .focus-card {
-      min-height: 220px;
-      padding: 25px;
-      display: flex;
-      flex-direction: column;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: var(--surface-soft);
-      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
-    }
-
-    .focus-card:hover {
-      border-color: var(--accent);
-      box-shadow: 0 16px 34px rgba(29, 44, 38, 0.06);
-      transform: translateY(-3px);
-    }
-
-    .focus-number {
-      margin-bottom: auto;
-      color: var(--accent);
-      font-size: 12px;
-      font-weight: 750;
-      letter-spacing: 0.12em;
-    }
-
-    .focus-card h3 {
-      margin-bottom: 8px;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 25px;
-      font-weight: 400;
-      line-height: 1.2;
-    }
-
-    .focus-card p:last-child {
-      margin-bottom: 0;
+      margin: 2px 0 0;
       color: var(--muted);
       font-size: 14px;
     }
 
     .publication-list {
-      display: grid;
-      gap: 20px;
-    }
-
-    .publication {
-      padding: 22px;
-      display: grid;
-      grid-template-columns: minmax(250px, 35%) minmax(0, 1fr);
-      gap: 30px;
-      align-items: center;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: var(--surface);
-      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
-    }
-
-    .publication:hover {
-      border-color: rgba(11, 107, 90, 0.32);
-      box-shadow: 0 18px 40px rgba(29, 44, 38, 0.07);
-      transform: translateY(-3px);
-    }
-
-    .publication-media {
-      aspect-ratio: 16 / 10;
-      display: grid;
-      place-items: center;
-      overflow: hidden;
-      border: 1px solid #ecebe5;
-      border-radius: 16px;
-      background: #fff;
-    }
-
-    .publication-media img {
-      width: 100%;
-      height: 100%;
-      display: block;
-      object-fit: contain;
-      transition: transform 250ms ease;
-    }
-
-    .publication:hover .publication-media img {
-      transform: scale(1.018);
-    }
-
-    .publication-kicker {
-      margin-bottom: 13px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      color: var(--faint);
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.09em;
-      text-transform: uppercase;
-    }
-
-    .publication h3 {
-      margin-bottom: 11px;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(21px, 2.5vw, 27px);
-      font-weight: 400;
-      letter-spacing: -0.02em;
-      line-height: 1.22;
-    }
-
-    .publication h3 a {
-      transition: color 150ms ease;
-    }
-
-    .publication h3 a:hover {
-      color: var(--accent);
-    }
-
-    .authors,
-    .venue {
-      margin-bottom: 6px;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.55;
-    }
-
-    .authors strong {
-      color: var(--ink);
-      font-weight: 750;
-    }
-
-    .venue {
-      color: var(--ink);
-      font-weight: 600;
-    }
-
-    .paper-links {
-      margin: 16px 0 0;
-      display: flex;
-      gap: 14px;
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    .paper-links a {
-      color: var(--accent);
-    }
-
-    .paper-links a:hover {
-      text-decoration: underline;
-      text-underline-offset: 4px;
-    }
-
-    .contact-section {
-      padding-block: 94px;
       border-top: 1px solid var(--line);
     }
 
-    .contact-panel {
-      padding: clamp(34px, 6vw, 68px);
+    .publication {
+      padding-block: 18px;
       display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.8fr);
-      gap: 60px;
-      align-items: end;
-      overflow: hidden;
-      position: relative;
-      border-radius: 32px;
-      background: var(--contact-bg);
-      color: var(--contact-ink);
+      grid-template-columns: 180px minmax(0, 1fr);
+      gap: 20px;
+      align-items: start;
+      border-bottom: 1px solid var(--line);
     }
 
-    .contact-panel::after {
-      content: "";
-      width: 330px;
-      height: 330px;
-      position: absolute;
-      top: -175px;
-      right: -95px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 50%;
-      box-shadow: 0 0 0 44px rgba(255, 255, 255, 0.025), 0 0 0 88px rgba(255, 255, 255, 0.02);
-      pointer-events: none;
+    .publication img {
+      width: 180px;
+      height: 112px;
+      display: block;
+      border: 1px solid var(--line);
+      border-radius: 0;
+      background: var(--image-background);
+      object-fit: contain;
     }
 
-    .contact-label {
-      margin-bottom: 18px;
-      color: #95c7b9;
-      font-size: 12px;
-      font-weight: 750;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
+    .paper-title {
+      margin: 0 0 6px;
+      font-size: 15px;
+      font-weight: 650;
+      line-height: 1.4;
     }
 
-    .contact-panel h2 {
-      max-width: 640px;
-      margin-bottom: 16px;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(40px, 6vw, 64px);
-      font-weight: 400;
-      letter-spacing: -0.045em;
-      line-height: 1.02;
+    .paper-title a {
+      text-decoration: none;
     }
 
-    .contact-panel p:last-child {
-      max-width: 630px;
-      margin-bottom: 0;
-      color: #bec9c4;
-      font-size: 17px;
+    .paper-title a:hover {
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
     }
 
-    .contact-links {
-      margin: 0;
-      display: grid;
-      border-top: 1px solid rgba(255, 255, 255, 0.18);
-      font-style: normal;
+    .authors,
+    .venue,
+    .paper-links {
+      margin: 0 0 4px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
     }
 
-    .contact-links a {
-      padding-block: 13px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.18);
-      color: #eef4f1;
-      font-size: 14px;
-      font-weight: 600;
+    .authors strong {
+      color: var(--text);
+      font-weight: 650;
     }
 
-    .contact-links a:hover {
-      color: #9bd2c2;
+    .venue {
+      color: var(--text);
+    }
+
+    .paper-links {
+      margin-top: 8px;
     }
 
     .site-footer {
-      padding-block: 28px 40px;
+      border-top: 1px solid var(--line);
       color: var(--muted);
       font-size: 12px;
     }
 
-    .footer-inner {
+    .footer-row {
+      min-height: 64px;
       display: flex;
+      align-items: center;
       justify-content: space-between;
-      gap: 30px;
-      align-items: flex-start;
+      gap: 20px;
     }
 
-    .footer-inner p {
+    .footer-row p {
       margin: 0;
     }
 
-    .back-to-top {
-      color: var(--muted);
-      font-weight: 650;
-      transition: color 150ms ease;
-    }
-
-    .back-to-top:hover {
-      color: var(--accent);
-    }
-
-    @media (max-width: 920px) {
-      .hero {
-        min-height: auto;
-        grid-template-columns: minmax(0, 1fr) minmax(250px, 320px);
-        gap: 44px;
-      }
-
-      h1 {
-        font-size: clamp(48px, 8vw, 68px);
-      }
-
-      .education-list {
-        margin-left: 0;
-      }
-
-      .contact-panel {
-        grid-template-columns: 1fr;
-        gap: 38px;
-      }
-    }
-
-    @media (max-width: 740px) {
-      .site-nav a:not(.nav-cta) {
-        display: none;
-      }
-
-      .hero {
-        padding-block: 52px 62px;
-        grid-template-columns: 1fr;
-      }
-
-      .hero-copy {
-        order: 1;
-      }
-
-      .portrait-card {
-        width: min(100%, 360px);
-        order: 2;
-        transform: none;
-      }
-
-      .section {
-        padding-block: 72px;
-      }
-
-      .section-heading {
-        margin-bottom: 36px;
-        grid-template-columns: 1fr;
-        gap: 12px;
-      }
-
-      .section-index {
-        margin-top: 0;
-      }
-
-      .focus-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .focus-card {
-        min-height: 180px;
-      }
-
-      .publication {
-        grid-template-columns: 1fr;
-        gap: 22px;
-      }
-
-      .publication-media {
-        max-height: 320px;
-      }
-
-      .contact-section {
-        padding-block: 72px;
-      }
-    }
-
-    @media (max-width: 560px) {
+    @media (max-width: 620px) {
       .shell {
         width: min(calc(100% - 32px), var(--max-width));
       }
 
-      .header-inner {
-        min-height: 64px;
+      .header-row {
+        min-height: 60px;
       }
 
-      .site-nav {
-        gap: 10px;
-      }
-
-      .brand-mark {
-        width: 34px;
-        height: 34px;
+      .intro {
+        padding-block: 36px 34px;
+        grid-template-columns: 1fr;
+        gap: 24px;
       }
 
       h1 {
-        font-size: clamp(44px, 14vw, 60px);
+        font-size: 27px;
       }
 
-      .portrait-card figcaption {
-        align-items: flex-start;
-        flex-direction: column;
+      .portrait {
+        width: 160px;
+        height: 192px;
+      }
+
+      .section {
+        padding-block: 26px 32px;
+      }
+
+      .education-row {
+        grid-template-columns: 1fr;
         gap: 2px;
       }
 
-      .education-item {
-        grid-template-columns: 1fr auto;
-        gap: 11px 18px;
-      }
-
-      .education-date {
-        grid-column: 1 / -1;
-      }
-
       .publication {
-        padding: 14px;
-        border-radius: 20px;
+        grid-template-columns: 1fr;
+        gap: 12px;
       }
 
-      .publication-copy {
-        padding: 2px 4px 8px;
-      }
-
-      .contact-panel {
-        border-radius: 24px;
-      }
-
-      .footer-inner {
-        align-items: center;
-        gap: 14px;
+      .publication img {
+        width: 100%;
+        height: auto;
+        max-height: 230px;
       }
     }
 
@@ -937,200 +416,113 @@
       html {
         scroll-behavior: auto;
       }
-
-      *,
-      *::before,
-      *::after {
-        scroll-behavior: auto !important;
-        transition-duration: 0.01ms !important;
-      }
     }
   </style>
 </head>
 <body>
-  <a class="skip-link" href="#main-content">Skip to main content</a>
-
   <header class="site-header">
-    <div class="shell header-inner">
-      <a class="brand" href="#about" aria-label="Rong Zhao — back to top">
-        <span class="brand-mark" aria-hidden="true">RZ</span>
+    <div class="shell header-row">
+      <a class="brand" href="#top" aria-label="Rong Zhao — back to top">
+        <svg class="lemon-logo" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true">
+          <path d="m2.5 16 2.9-1.8C6.5 9.1 10.6 5.5 16 5.5s9.5 3.6 10.6 8.7l2.9 1.8-2.9 1.8c-1.1 5.1-5.2 8.7-10.6 8.7s-9.5-3.6-10.6-8.7L2.5 16Z"></path>
+          <path d="M20.5 7.1c1.4-3.2 4.1-4.7 7.8-4.4-1.3 3.3-3.8 4.8-7.8 4.4Z"></path>
+        </svg>
         <span>Rong Zhao</span>
       </a>
 
-      <nav class="site-nav" aria-label="Primary navigation">
-        <a href="#education">Education</a>
-        <a href="#research">Research</a>
-        <a href="#publications">Publications</a>
-        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false" title="Switch to dark mode">
-          <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M20.5 14.3A8.5 8.5 0 0 1 9.7 3.5 8.5 8.5 0 1 0 20.5 14.3Z"></path>
-          </svg>
-          <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
-            <circle cx="12" cy="12" r="3.5"></circle>
-            <path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"></path>
-          </svg>
-        </button>
-        <a class="nav-cta" href="mailto:zhaorong8007@gmail.com">Email ↗</a>
-      </nav>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false" title="Switch to dark mode">
+        <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="square" aria-hidden="true">
+          <path d="M20 14.2A8.2 8.2 0 0 1 9.8 4 8.2 8.2 0 1 0 20 14.2Z"></path>
+        </svg>
+        <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="square" aria-hidden="true">
+          <circle cx="12" cy="12" r="3.5"></circle>
+          <path d="M12 2v2M12 20v2M5 5l1.4 1.4M17.6 17.6 19 19M2 12h2M20 12h2M5 19l1.4-1.4M17.6 6.4 19 5"></path>
+        </svg>
+      </button>
     </div>
   </header>
 
-  <main id="main-content">
-    <section class="shell hero" id="about" aria-labelledby="hero-title">
-      <div class="hero-copy">
-        <p class="eyebrow">MRes Researcher · University College London</p>
-        <h1 id="hero-title">AI for cities, <em>grounded in people.</em></h1>
-        <p class="lede">Hi, I’m Rong Zhao (赵容), an MRes student at University College London. My research explores large language models for urban and social science, agentic AI, and vision-language models.</p>
-        <p class="background-note">I received my Bachelor of Architecture from Tsinghua University in 2025.</p>
+  <main class="shell" id="top">
+    <section class="intro" aria-labelledby="name">
+      <div class="bio">
+        <h1 id="name">Rong Zhao (赵容)</h1>
+        <p>I am an MRes student at University College London, expected to graduate in Fall 2026.</p>
+        <p>My research interests include large language models for urban and social science, agentic AI, and vision-language models.</p>
+        <p>I am seeking Ph.D. opportunities for Spring/Fall 2027.</p>
 
-        <div class="hero-actions" aria-label="Profile links">
-          <a class="button button-primary" href="mailto:zhaorong8007@gmail.com">Get in touch <span aria-hidden="true">↗</span></a>
-          <a class="button" href="https://scholar.google.com/citations?user=O7AIej0AAAAJ&amp;hl=en" target="_blank" rel="noopener noreferrer">Google Scholar <span aria-hidden="true">↗</span></a>
-          <a class="button" href="https://github.com/jameslemon2002" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
-        </div>
-
-        <p class="availability">Seeking Ph.D. opportunities for Spring/Fall 2027.</p>
+        <p class="profile-links">
+          <a href="mailto:zhaorong8007@gmail.com">Email</a>
+          <span class="separator" aria-hidden="true">/</span>
+          <a href="assets/wechat-qr.png" target="_blank" rel="noopener noreferrer">WeChat</a>
+          <span class="separator" aria-hidden="true">/</span>
+          <a href="https://scholar.google.com/citations?user=O7AIej0AAAAJ&amp;hl=en" target="_blank" rel="noopener noreferrer">Google Scholar</a>
+          <span class="separator" aria-hidden="true">/</span>
+          <a href="https://github.com/jameslemon2002" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </p>
       </div>
 
-      <figure class="portrait-card">
-        <img class="portrait" src="assets/portrait.jpg" width="600" height="900" alt="Rong Zhao in Santorini" fetchpriority="high" decoding="async">
-        <figcaption>
-          <strong>Rong Zhao / 赵容</strong>
-          <span>Urban AI · Multimodal Systems</span>
-        </figcaption>
-      </figure>
+      <img class="portrait" src="assets/portrait.jpg" width="600" height="900" alt="Rong Zhao" fetchpriority="high" decoding="async">
     </section>
 
-    <section class="shell section" id="education" aria-labelledby="education-title">
-      <div class="section-heading">
-        <p class="section-index">01 / Education</p>
-        <div>
-          <h2 id="education-title">Architecture to artificial intelligence.</h2>
-          <p>An interdisciplinary path connecting spatial thinking, urban questions, and human-centred AI research.</p>
-        </div>
-      </div>
-
+    <section class="section" aria-labelledby="education-title">
+      <h2 id="education-title">Education</h2>
       <div class="education-list">
-        <article class="education-item">
-          <p class="education-date">Expected Fall 2026</p>
+        <div class="education-row">
+          <p class="education-date">Expected 2026</p>
           <div>
             <h3 class="education-degree">MRes</h3>
             <p class="education-school">University College London</p>
           </div>
-          <span class="status">Current</span>
-        </article>
-
-        <article class="education-item">
-          <p class="education-date">2020 — 2025</p>
+        </div>
+        <div class="education-row">
+          <p class="education-date">2020–2025</p>
           <div>
             <h3 class="education-degree">Bachelor of Architecture (B.Arch.)</h3>
             <p class="education-school">Tsinghua University</p>
           </div>
-          <span class="status">Completed</span>
-        </article>
+        </div>
       </div>
     </section>
 
-    <section class="shell section" id="research" aria-labelledby="research-title">
-      <div class="section-heading">
-        <p class="section-index">02 / Research</p>
-        <div>
-          <h2 id="research-title">Research focus.</h2>
-          <p>I study how intelligent systems perceive, reason about, and represent the social and spatial complexity of cities.</p>
-        </div>
-      </div>
-
-      <div class="focus-grid">
-        <article class="focus-card">
-          <span class="focus-number">01</span>
-          <h3>Urban &amp; Social AI</h3>
-          <p>Large language models for urban and social science.</p>
-        </article>
-        <article class="focus-card">
-          <span class="focus-number">02</span>
-          <h3>Agentic AI</h3>
-          <p>Agent-based systems for complex reasoning and evaluation.</p>
-        </article>
-        <article class="focus-card">
-          <span class="focus-number">03</span>
-          <h3>Vision-Language Models</h3>
-          <p>Human-aligned multimodal perception and representation.</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="shell section" id="publications" aria-labelledby="publications-title">
-      <div class="section-heading">
-        <p class="section-index">03 / Publications</p>
-        <div>
-          <h2 id="publications-title">Selected papers.</h2>
-          <p>Recent work across urban perception, generative AI, and human-aligned multimodal systems.</p>
-        </div>
-      </div>
-
+    <section class="section" aria-labelledby="papers-title">
+      <h2 id="papers-title">Selected Papers</h2>
       <div class="publication-list">
         <article class="publication">
-          <a class="publication-media" href="https://doi.org/10.48550/arXiv.2602.19442" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true">
-            <img src="assets/paper-urbanalign.png" width="760" height="423" alt="" loading="lazy" decoding="async">
-          </a>
-          <div class="publication-copy">
-            <p class="publication-kicker"><span>Selected paper 01</span><span class="status">ECCV 2026</span></p>
-            <h3><a href="https://doi.org/10.48550/arXiv.2602.19442" target="_blank" rel="noopener noreferrer">UrbanAlign: Post-hoc Semantic Calibration for VLM-Human Preference Alignment</a></h3>
+          <img src="assets/paper-urbanalign.png" width="760" height="423" alt="" loading="lazy" decoding="async">
+          <div>
+            <h3 class="paper-title"><a href="https://doi.org/10.48550/arXiv.2602.19442" target="_blank" rel="noopener noreferrer">UrbanAlign: Post-hoc Semantic Calibration for VLM-Human Preference Alignment</a></h3>
             <p class="authors">Y. Zhang, <strong>Rong Zhao</strong>, Z. Sha, Y. Li, L. Wang, C. Hou, W. Ji, H. Huang, Y. Wan, J. Yu, J. Xia, Y. Zhang, C. Shi</p>
-            <p class="venue">European Conference on Computer Vision (ECCV), 2026</p>
-            <p class="paper-links"><a href="https://doi.org/10.48550/arXiv.2602.19442" target="_blank" rel="noopener noreferrer">Read preprint ↗</a></p>
+            <p class="venue">ECCV, 2026</p>
+            <p class="paper-links"><a href="https://doi.org/10.48550/arXiv.2602.19442" target="_blank" rel="noopener noreferrer">Preprint</a></p>
           </div>
         </article>
 
         <article class="publication">
-          <a class="publication-media" href="https://doi.org/10.48550/arXiv.2604.20048" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true">
-            <img src="assets/paper-culturally-uneven-urban-perception.png" width="760" height="436" alt="" loading="lazy" decoding="async">
-          </a>
-          <div class="publication-copy">
-            <p class="publication-kicker"><span>Selected paper 02</span><span class="status">Preprint</span></p>
-            <h3><a href="https://doi.org/10.48550/arXiv.2604.20048" target="_blank" rel="noopener noreferrer">Culturally Uneven Urban Perception in Large Language Models</a></h3>
+          <img src="assets/paper-culturally-uneven-urban-perception.png" width="760" height="436" alt="" loading="lazy" decoding="async">
+          <div>
+            <h3 class="paper-title"><a href="https://doi.org/10.48550/arXiv.2604.20048" target="_blank" rel="noopener noreferrer">Culturally Uneven Urban Perception in Large Language Models</a></h3>
             <p class="authors"><strong>Rong Zhao</strong>, W. Liu, Z. Sha, N. Su, Y. Zhang, Y. Long</p>
-            <p class="paper-links"><a href="https://doi.org/10.48550/arXiv.2604.20048" target="_blank" rel="noopener noreferrer">Read preprint ↗</a></p>
+            <p class="paper-links"><a href="https://doi.org/10.48550/arXiv.2604.20048" target="_blank" rel="noopener noreferrer">Preprint</a></p>
           </div>
         </article>
 
         <article class="publication">
-          <a class="publication-media" href="https://doi.org/10.48550/arXiv.2505.13803" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true">
-            <img src="assets/paper-genai-urban-science.png" width="760" height="275" alt="" loading="lazy" decoding="async">
-          </a>
-          <div class="publication-copy">
-            <p class="publication-kicker"><span>Selected paper 03</span><span class="status">Under revision</span></p>
-            <h3><a href="https://doi.org/10.48550/arXiv.2505.13803" target="_blank" rel="noopener noreferrer">GenAI Models Capture Urban Science but Oversimplify Complexity</a></h3>
+          <img src="assets/paper-genai-urban-science.png" width="760" height="275" alt="" loading="lazy" decoding="async">
+          <div>
+            <h3 class="paper-title"><a href="https://doi.org/10.48550/arXiv.2505.13803" target="_blank" rel="noopener noreferrer">GenAI Models Capture Urban Science but Oversimplify Complexity</a></h3>
             <p class="authors">Y. Zhang, <strong>Rong Zhao</strong>, Z. Huang, X. Wang, Y. Ma, Y. Long</p>
             <p class="venue">Under revision at Nature Communications, 2025</p>
-            <p class="paper-links"><a href="https://doi.org/10.48550/arXiv.2505.13803" target="_blank" rel="noopener noreferrer">Read preprint ↗</a></p>
+            <p class="paper-links"><a href="https://doi.org/10.48550/arXiv.2505.13803" target="_blank" rel="noopener noreferrer">Preprint</a></p>
           </div>
         </article>
-      </div>
-    </section>
-
-    <section class="shell contact-section" id="contact" aria-labelledby="contact-title">
-      <div class="contact-panel">
-        <div>
-          <p class="contact-label">04 / Contact</p>
-          <h2 id="contact-title">Let’s explore what AI can learn from cities.</h2>
-          <p>I am currently seeking Ph.D. opportunities for Spring/Fall 2027 in urban AI, agentic AI, vision-language models, and related areas.</p>
-        </div>
-
-        <address class="contact-links">
-          <a href="mailto:zhaorong8007@gmail.com"><span>Email</span><span aria-hidden="true">↗</span></a>
-          <a href="https://scholar.google.com/citations?user=O7AIej0AAAAJ&amp;hl=en" target="_blank" rel="noopener noreferrer"><span>Google Scholar</span><span aria-hidden="true">↗</span></a>
-          <a href="https://github.com/jameslemon2002" target="_blank" rel="noopener noreferrer"><span>GitHub</span><span aria-hidden="true">↗</span></a>
-          <a href="assets/wechat-qr.png" target="_blank" rel="noopener noreferrer"><span>WeChat</span><span aria-hidden="true">↗</span></a>
-        </address>
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <div class="shell footer-inner">
-      <p>© 2026 Rong Zhao. Built as a lightweight, accessible academic site.</p>
-      <a class="back-to-top" href="#about">Back to top ↑</a>
+    <div class="shell footer-row">
+      <p>© 2026 Rong Zhao</p>
+      <a href="#top">Back to top</a>
     </div>
   </footer>
 
@@ -1147,11 +539,11 @@
         toggle.setAttribute('aria-pressed', String(isDark));
         toggle.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
         toggle.title = isDark ? 'Switch to light mode' : 'Switch to dark mode';
-        themeColor.setAttribute('content', isDark ? '#0f1513' : '#f3f0e8');
+        themeColor.setAttribute('content', isDark ? '#111111' : '#ffffff');
 
         if (persist) {
           try {
-            localStorage.setItem('theme', theme);
+            localStorage.setItem('rz-theme', theme);
           } catch (_) {
             // The selected theme still applies for the current page.
           }
