@@ -73,6 +73,8 @@
       --muted: #686868;
       --control: #f2f2f2;
       --image-background: #ffffff;
+      --map-land: #ededed;
+      --map-point: #474747;
       --max-width: 880px;
     }
 
@@ -83,6 +85,8 @@
       --muted: #aaaaaa;
       --control: #242424;
       --image-background: #ffffff;
+      --map-land: #282828;
+      --map-point: #c5c5c5;
     }
 
     *,
@@ -363,6 +367,97 @@
       font-variant-numeric: tabular-nums;
     }
 
+    .visitor-map-section {
+      width: min(360px, 100%);
+      margin-inline: auto;
+      padding-block: 16px 8px;
+      text-align: center;
+    }
+
+    .visitor-map-section h2 {
+      margin-bottom: 14px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .visitor-map-section h2 a {
+      text-decoration: none;
+    }
+
+    .visitor-map-section h2 a:hover {
+      text-decoration: underline;
+    }
+
+    .visitor-map-stage {
+      position: relative;
+      aspect-ratio: 2;
+    }
+
+    .visitor-map-world {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .visitor-map-land {
+      fill: var(--map-land);
+    }
+
+    .visitor-map-points {
+      position: absolute;
+      inset: 0;
+    }
+
+    .visitor-point {
+      position: absolute;
+      display: grid;
+      place-items: center;
+      width: 24px;
+      height: 24px;
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+      background: transparent;
+      color: var(--map-point);
+      -webkit-tap-highlight-color: transparent;
+      transform: translate(-50%, -50%);
+      cursor: pointer;
+    }
+
+    .visitor-point::after {
+      width: var(--dot-size, 5px);
+      height: var(--dot-size, 5px);
+      border-radius: 50%;
+      background: currentColor;
+      content: "";
+    }
+
+    .visitor-point:is(:hover, :focus-visible, [aria-pressed="true"]) {
+      color: var(--text);
+      z-index: 1;
+    }
+
+    .visitor-point:is(:hover, :focus-visible, [aria-pressed="true"])::after {
+      transform: scale(1.25);
+    }
+
+    .visitor-map-detail {
+      min-height: 36px;
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+
+    @media (pointer: coarse) {
+      .visitor-point {
+        width: 44px;
+        height: 44px;
+      }
+    }
+
     @media (max-width: 620px) {
       .shell {
         width: min(calc(100% - 32px), var(--max-width));
@@ -529,6 +624,19 @@
         </article>
       </div>
     </section>
+    <section class="visitor-map-section" id="visitor-map" aria-labelledby="visitor-map-title" data-state="loading">
+      <h2 id="visitor-map-title"><a href="https://mapmyvisitors.com/web/1c5mg" target="_blank" rel="noopener noreferrer" title="View recent visitor statistics on MapMyVisitors">Visitors</a></h2>
+      <div class="visitor-map-stage">
+        <svg class="visitor-map-world" viewBox="0 0 360 180" role="img" aria-labelledby="visitor-world-title visitor-world-description">
+          <title id="visitor-world-title">World map of recent visitor locations</title>
+          <desc id="visitor-world-description">An Equal Earth world map. Dots indicate approximate city-level locations inferred from visitor IP addresses.</desc>
+          <use class="visitor-map-land" href="assets/visitor-land.svg#land"></use>
+        </svg>
+        <div class="visitor-map-points" role="group" aria-label="Recent visitor locations"></div>
+      </div>
+      <p class="visitor-map-detail" id="visitor-map-detail" role="status" aria-live="polite">Recent locations · approximate</p>
+      <noscript><p class="visitor-map-detail">Enable JavaScript to show recent locations.</p></noscript>
+    </section>
   </main>
 
   <footer class="site-footer">
@@ -543,6 +651,7 @@
   </footer>
 
   <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <script type="module" src="assets/visitor-map.mjs"></script>
 
   <script>
     (() => {

@@ -1,0 +1,11 @@
+{
+  "type": "EqualEarth",
+  "width": 360,
+  "height": 180,
+  "scale": 65.76443809172974,
+  "translate": [
+    180,
+    90
+  ],
+  "source": "https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/land-110m.json"
+}
