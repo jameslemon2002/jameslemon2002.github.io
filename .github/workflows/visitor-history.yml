@@ -1,0 +1,55 @@
+name: Save visitor locations
+
+on:
+  schedule:
+    - cron: '13 * * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/visitor-history.yml'
+      - 'scripts/sync-visitor-history.mjs'
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: visitor-history
+  cancel-in-progress: false
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check parser and archive merging
+        run: node --test test/*.test.mjs
+      - name: Save newly observed cities
+        run: node scripts/sync-visitor-history.mjs
+      - name: Commit history when it changes
+        id: save
+        run: |
+          if git diff --quiet -- assets/visitor-history.json; then
+            echo 'changed=false' >> "$GITHUB_OUTPUT"
+          else
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add assets/visitor-history.json
+            git commit -m 'Save newly observed visitor cities'
+            git push origin HEAD:main
+            echo 'changed=true' >> "$GITHUB_OUTPUT"
+          fi
+      # GITHUB_TOKEN commits do not start the normal branch-based Pages build.
+      # Explicitly request a rebuild so newly saved dots reach the public site.
+      - name: Publish updated history
+        if: steps.save.outputs.changed == 'true' || github.event_name == 'push'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api --method POST "repos/$GITHUB_REPOSITORY/pages/builds" --jq '.status'

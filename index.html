@@ -443,12 +443,22 @@
     }
 
     .visitor-map-detail {
-      min-height: 36px;
-      margin: 10px 0 0;
-      color: var(--muted);
+      position: absolute;
+      z-index: 2;
+      bottom: 0;
+      left: 50%;
+      width: max-content;
+      max-width: calc(100% - 16px);
+      margin: 0;
+      padding: 3px 6px;
+      border-radius: 3px;
+      background: var(--background);
+      color: var(--text);
       font-size: 12px;
       line-height: 1.5;
       overflow-wrap: anywhere;
+      transform: translateX(-50%);
+      pointer-events: none;
     }
 
     @media (pointer: coarse) {
@@ -625,17 +635,16 @@
       </div>
     </section>
     <section class="visitor-map-section" id="visitor-map" aria-labelledby="visitor-map-title" data-state="loading">
-      <h2 id="visitor-map-title"><a href="https://mapmyvisitors.com/web/1c5mg" target="_blank" rel="noopener noreferrer" title="View recent visitor statistics on MapMyVisitors">Visitors</a></h2>
+      <h2 id="visitor-map-title"><a href="https://mapmyvisitors.com/web/1c5mg" target="_blank" rel="noopener noreferrer" title="View visitor statistics on MapMyVisitors">Visitors</a></h2>
       <div class="visitor-map-stage">
         <svg class="visitor-map-world" viewBox="0 0 360 180" role="img" aria-labelledby="visitor-world-title visitor-world-description">
-          <title id="visitor-world-title">World map of recent visitor locations</title>
+          <title id="visitor-world-title">World map of saved visitor locations</title>
           <desc id="visitor-world-description">An Equal Earth world map. Dots indicate approximate city-level locations inferred from visitor IP addresses.</desc>
           <use class="visitor-map-land" href="assets/visitor-land.svg#land"></use>
         </svg>
-        <div class="visitor-map-points" role="group" aria-label="Recent visitor locations"></div>
+        <div class="visitor-map-points" role="group" aria-label="Saved visitor locations"></div>
+        <p class="visitor-map-detail" id="visitor-map-detail" role="status" aria-live="polite" hidden></p>
       </div>
-      <p class="visitor-map-detail" id="visitor-map-detail" role="status" aria-live="polite">Recent locations · approximate</p>
-      <noscript><p class="visitor-map-detail">Enable JavaScript to show recent locations.</p></noscript>
     </section>
   </main>
 
@@ -651,7 +660,7 @@
   </footer>
 
   <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-  <script type="module" src="assets/visitor-map.mjs"></script>
+  <script type="module" src="assets/visitor-map.mjs?v=20261105-history"></script>
 
   <script>
     (() => {

@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "startedOn": "2026-11-05",
+  "updatedAt": "2026-11-05T07:16:02.792Z",
+  "cities": [
+    {
+      "location": "Los Angeles, California, United States",
+      "country": "US",
+      "latitude": 34.1,
+      "longitude": -118.3,
+      "firstSavedOn": "2026-11-05"
+    }
+  ]
+}

@@ -3,7 +3,6 @@ const WIDGET_KEY = 'JT_9V-adiGVBX89Jf7Bh7Kx7XH6wUPU5GFzTToZpBz4';
 const PROJECT_ID = 2246776;
 const MAP_WIDTH = 360;
 const MAP_HEIGHT = 180;
-const DEFAULT_DETAIL = 'Recent locations · approximate';
 
 // Read only literal coordinates and metadata from the provider's JavaScript
 // response. Never evaluate the returned payload or retain visitor identifiers.
@@ -95,10 +94,12 @@ function renderCities(section, cities, projection) {
   const points = section.querySelector('.visitor-map-points');
   const detail = section.querySelector('.visitor-map-detail');
   let pinned = null;
-  const describe = city => city.location + ' · ' +
-    new Intl.NumberFormat('en').format(city.visits) +
-    (city.visits === 1 ? ' recent visit' : ' recent visits');
-  const reset = () => { detail.textContent = pinned ? describe(pinned.city) : DEFAULT_DETAIL; };
+  const show = city => {
+    detail.textContent = city ? city.location : '';
+    detail.hidden = !city;
+  };
+  const reset = () => show(pinned?.city);
+  points.replaceChildren();
   for (const city of cities) {
     const [x, y] = projectLocation(city.longitude, city.latitude, projection);
     if (x < 0 || x > MAP_WIDTH || y < 0 || y > MAP_HEIGHT) continue;
@@ -107,12 +108,12 @@ function renderCities(section, cities, projection) {
     button.className = 'visitor-point';
     button.style.left = (x / MAP_WIDTH * 100) + '%';
     button.style.top = (y / MAP_HEIGHT * 100) + '%';
-    button.style.setProperty('--dot-size', Math.min(8, 4 + Math.log2(city.visits + 1)) + 'px');
-    button.setAttribute('aria-label', describe(city));
+    button.style.setProperty('--dot-size', '5.5px');
+    button.setAttribute('aria-label', city.location);
     button.setAttribute('aria-pressed', 'false');
-    button.addEventListener('pointerenter', () => { detail.textContent = describe(city); });
+    button.addEventListener('pointerenter', () => show(city));
     button.addEventListener('pointerleave', reset);
-    button.addEventListener('focus', () => { detail.textContent = describe(city); });
+    button.addEventListener('focus', () => show(city));
     button.addEventListener('blur', reset);
     button.addEventListener('click', () => {
       if (pinned) pinned.button.setAttribute('aria-pressed', 'false');
@@ -122,33 +123,53 @@ function renderCities(section, cities, projection) {
     });
     points.append(button);
   }
-  section.addEventListener('keydown', event => {
+  section.onkeydown = event => {
     if (event.key === 'Escape') {
       if (pinned) pinned.button.setAttribute('aria-pressed', 'false');
       pinned = null;
       reset();
     }
-  });
+  };
   section.dataset.state = points.children.length ? 'ready' : 'empty';
-  detail.textContent = points.children.length ? DEFAULT_DETAIL : 'No recent locations to show';
+  reset();
 }
 
 async function mount(section) {
   const detail = section.querySelector('.visitor-map-detail');
-  // Do not record development or file previews as visits to the public website.
-  if (location.hostname !== SITE_HOST) {
-    section.dataset.state = 'preview';
-    detail.textContent = 'Preview · location tracking disabled';
-    return;
-  }
-  detail.textContent = 'Loading recent locations…';
+  let projection;
+  let saved = [];
   try {
-    const projectionResponse = await fetch(new URL('./visitor-map-projection.json', import.meta.url));
+    const [projectionResponse, archiveResponse] = await Promise.all([
+      fetch(new URL('./visitor-map-projection.json', import.meta.url)),
+      fetch(new URL('./visitor-history.json', import.meta.url), { cache: 'no-cache' })
+        .catch(() => null)
+    ]);
     if (!projectionResponse.ok) throw new Error('Projection unavailable');
-    const projection = await projectionResponse.json();
+    projection = await projectionResponse.json();
     if (!Number.isFinite(projection.scale) || projection.scale <= 0 ||
         !Array.isArray(projection.translate) || projection.translate.length !== 2 ||
         !projection.translate.every(Number.isFinite)) throw new Error('Invalid projection');
+    if (archiveResponse?.ok) {
+      const archive = await archiveResponse.json();
+      if (archive.version === 1 && Array.isArray(archive.cities)) {
+        saved = archive.cities.filter(city => typeof city.location === 'string' &&
+          city.location.length > 0 && city.location.length <= 180 &&
+          Number.isFinite(city.latitude) && Math.abs(city.latitude) <= 90 &&
+          Number.isFinite(city.longitude) && Math.abs(city.longitude) <= 180);
+      }
+    }
+    renderCities(section, saved, projection);
+  } catch {
+    section.dataset.state = 'unavailable';
+    detail.hidden = true;
+    return;
+  }
+
+  // The saved map is already visible. Register the current visit independently;
+  // a blocked or slow third party must never hide the archived city locations.
+  // Local previews can show the archive without recording test traffic.
+  if (location.hostname !== SITE_HOST) return;
+  try {
     const registration = new URL('https://mapmyvisitors.com/widget_call_home.js');
     registration.search = new URLSearchParams({ d: WIDGET_KEY, cl: 'ffffff', w: '360', t: 'm' });
     const bootstrap = await jsonp(registration);
@@ -166,10 +187,15 @@ async function mount(section) {
       user: '0', url: domain, id: String(PROJECT_ID), mapType: 'widget'
     });
     const payload = await jsonp(endpoint);
-    renderCities(section, parseLocations(payload), projection);
+    const cities = new Map(saved.map(city => [city.location.toLowerCase() + '|' + city.country, city]));
+    for (const city of parseLocations(payload)) {
+      const key = city.location.toLowerCase() + '|' + city.country;
+      if (!cities.has(key)) cities.set(key, city);
+    }
+    // The background response can add new locations, but cannot remove history.
+    if (cities.size !== saved.length) renderCities(section, [...cities.values()], projection);
   } catch {
-    section.dataset.state = 'unavailable';
-    detail.textContent = 'Recent location data is unavailable';
+    // The same-origin archive remains displayed; no default caption is needed.
   }
 }
 
