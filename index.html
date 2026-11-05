@@ -356,6 +356,13 @@
       margin: 0;
     }
 
+    .visitor-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-variant-numeric: tabular-nums;
+    }
+
     @media (max-width: 620px) {
       .shell {
         width: min(calc(100% - 32px), var(--max-width));
@@ -398,6 +405,17 @@
         width: 100%;
         height: auto;
         max-height: 230px;
+      }
+
+      .footer-row {
+        flex-wrap: wrap;
+        gap: 8px 20px;
+        padding-block: 16px;
+      }
+
+      .visitor-stats {
+        order: 1;
+        flex-basis: 100%;
       }
     }
 
@@ -516,9 +534,15 @@
   <footer class="site-footer">
     <div class="shell footer-row">
       <p>© 2026 Rong Zhao</p>
+      <p class="visitor-stats" aria-label="Site visitor statistics" title="Visitor statistics provided by Busuanzi">
+        <span id="busuanzi_container_site_pv">Views: <span id="busuanzi_value_site_pv">—</span></span>
+        <span id="busuanzi_container_site_uv">Visitors: <span id="busuanzi_value_site_uv">—</span></span>
+      </p>
       <a href="#top">Back to top</a>
     </div>
   </footer>
+
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
   <script>
     (() => {
