@@ -19,11 +19,12 @@ jobs:
           node --input-type=module <<'JS'
           const origin = 'https://rong-visitor-map.giving-shrew-3152.chatgpt.site';
           const outputs = [];
-          for (const path of ['/api/health', '/api/locations', '/api/challenge']) {
+          for (const path of ['/api/health?geo=1', '/api/locations', '/api/challenge']) {
             try {
               const r = await fetch(origin + path, { headers: { Origin: 'https://jameslemon2002.github.io' }, signal: AbortSignal.timeout(15000) });
               const body = await r.text(); let data; try { data = JSON.parse(body); } catch {}
               outputs.push({ path, status: r.status, ok: data?.ok, geolocationAvailable: data?.geolocationAvailable,
+                trustedClientAddressAvailable: data?.trustedClientAddressAvailable, locationHeaderNames: data?.locationHeaderNames,
                 cities: data?.cities?.length, tokenIssued: !!data?.token, error: data?.error,
                 title: body.match(/<title>([^<]+)/i)?.[1] });
             } catch (error) { outputs.push({ path, error: error.message }); }
