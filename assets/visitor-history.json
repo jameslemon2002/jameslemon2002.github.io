@@ -1,7 +1,7 @@
 {
   "version": 1,
   "startedOn": "2026-11-05",
-  "updatedAt": "2026-11-08T17:37:22.656Z",
+  "updatedAt": "2026-11-08T20:26:51.256Z",
   "cities": [
     {
       "location": "Los Angeles, California, United States",
@@ -9,6 +9,13 @@
       "latitude": 34.1,
       "longitude": -118.3,
       "firstSavedOn": "2026-11-05"
+    },
+    {
+      "location": "Ukraine (country-level)",
+      "country": "UA",
+      "latitude": 48.4,
+      "longitude": 31.2,
+      "firstSavedOn": "2026-11-08"
     },
     {
       "location": "United States (country-level)",
