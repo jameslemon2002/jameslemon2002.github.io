@@ -1,7 +1,7 @@
 {
   "version": 1,
   "startedOn": "2026-11-05",
-  "updatedAt": "2026-11-05T07:16:02.792Z",
+  "updatedAt": "2026-11-08T17:37:22.656Z",
   "cities": [
     {
       "location": "Los Angeles, California, United States",
@@ -9,6 +9,13 @@
       "latitude": 34.1,
       "longitude": -118.3,
       "firstSavedOn": "2026-11-05"
+    },
+    {
+      "location": "United States (country-level)",
+      "country": "US",
+      "latitude": 37.1,
+      "longitude": -95.7,
+      "firstSavedOn": "2026-11-08"
     }
   ]
 }
