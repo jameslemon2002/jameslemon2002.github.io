@@ -1,5 +1,7 @@
 name: Back up visitor locations
 
+# Live map reads the collector directly; this job only keeps a repository backup.
+
 on:
   schedule:
     - cron: '13 * * * *'
