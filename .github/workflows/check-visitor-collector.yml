@@ -1,0 +1,45 @@
+name: Check visitor collector connectivity
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/check-visitor-collector.yml']
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check public collector and legacy response shape
+        run: |
+          node --input-type=module <<'JS'
+          const origin = 'https://rong-visitor-map.giving-shrew-3152.chatgpt.site';
+          const outputs = [];
+          for (const path of ['/api/health', '/api/locations', '/api/challenge']) {
+            try {
+              const r = await fetch(origin + path, { headers: { Origin: 'https://jameslemon2002.github.io' }, signal: AbortSignal.timeout(15000) });
+              const body = await r.text(); let data; try { data = JSON.parse(body); } catch {}
+              outputs.push({ path, status: r.status, ok: data?.ok, geolocationAvailable: data?.geolocationAvailable,
+                cities: data?.cities?.length, tokenIssued: !!data?.token, error: data?.error,
+                title: body.match(/<title>([^<]+)/i)?.[1] });
+            } catch (error) { outputs.push({ path, error: error.message }); }
+          }
+          console.log(JSON.stringify({ collector: outputs }));
+          try {
+            const url = 'https://mapmyvisitors.com/ajax/map?last_hit_id=0&initial_hit_id=0&initial=true&animate=false&user=0&url=%22https%3A%2F%2Fjameslemon2002.github.io%2F%22&id=2246776&mapType=widget&callback=visitorArchive';
+            const response = await fetch(url, { signal: AbortSignal.timeout(15000) });
+            const text = await response.text(); const wrapper = text.match(/^\s*visitorArchive\(([\s\S]*)\);?\s*$/);
+            const payload = wrapper ? JSON.parse(wrapper[1]) : '';
+            const shape = typeof payload === 'string' ? payload : '';
+            console.log(JSON.stringify({ legacy: { status: response.status, bytes: text.length, payloadBytes: shape.length,
+              addMarker: (shape.match(/\.addMarker\(/g) || []).length,
+              addMarkers: (shape.match(/\.addMarkers\(/g) || []).length,
+              realtime: (shape.match(/\.addRealtimeVisitors\(/g) || []).length,
+              functions: [...new Set([...shape.matchAll(/([a-zA-Z_$][\w.$]*)\s*\(/g)].map(x => x[1]))].slice(0, 25) } }));
+          } catch (error) { console.log(JSON.stringify({ legacyError: error.message })); }
+          if (!outputs.every(x => x.status === 200) || !outputs[0]?.geolocationAvailable) process.exitCode = 1;
+          JS
