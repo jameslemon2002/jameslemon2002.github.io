@@ -1,9 +1,8 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { parseLocations } from '../assets/visitor-map.mjs';
+import { normalizeCities } from '../assets/visitor-map.mjs';
 
 const archiveUrl = new URL('../assets/visitor-history.json', import.meta.url);
-const site = 'https://jameslemon2002.github.io/';
 
 export function decodeCallback(source) {
   const match = source.match(/^\s*visitorArchive\(([\s\S]*)\);?\s*$/);
@@ -41,11 +40,10 @@ export function mergeHistory(previous, locations, now = new Date()) {
 }
 
 async function fetchLocations() {
-  const url = new URL('https://mapmyvisitors.com/ajax/map');
-  url.search = new URLSearchParams({
-    last_hit_id: '0', initial_hit_id: '0', initial: 'true', animate: 'false',
-    user: '0', url: JSON.stringify(site), id: '2246776', mapType: 'widget', callback: 'visitorArchive'
-  });
+  const config = JSON.parse(await readFile(new URL('../assets/visitor-config.json', import.meta.url), 'utf8'));
+  const collector = new URL(config.collectorOrigin);
+  if (collector.protocol !== 'https:') throw new Error('Invalid collector URL');
+  const url = new URL('/api/locations', collector);
   let failure;
   for (let attempt = 0; attempt < 3; attempt++) {
     try {
@@ -53,7 +51,7 @@ async function fetchLocations() {
       if (!response.ok) throw new Error('Visitor service HTTP ' + response.status);
       const source = await response.text();
       if (source.length > 1200000) throw new Error('Visitor response too large');
-      return parseLocations(decodeCallback(source));
+      return normalizeCities(JSON.parse(source));
     } catch (error) {
       failure = error;
       if (attempt < 2) await new Promise(resolve => setTimeout(resolve, 1500 * (attempt + 1)));

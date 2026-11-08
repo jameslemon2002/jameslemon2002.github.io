@@ -19,17 +19,31 @@ jobs:
           node --input-type=module <<'JS'
           const origin = 'https://rong-visitor-map.giving-shrew-3152.chatgpt.site';
           const outputs = [];
+          let token;
           for (const path of ['/api/health?geo=1', '/api/locations', '/api/challenge']) {
             try {
               const r = await fetch(origin + path, { headers: { Origin: 'https://jameslemon2002.github.io' }, signal: AbortSignal.timeout(15000) });
               const body = await r.text(); let data; try { data = JSON.parse(body); } catch {}
+              if (path === '/api/challenge') token = data?.token;
               outputs.push({ path, status: r.status, ok: data?.ok, geolocationAvailable: data?.geolocationAvailable,
                 trustedClientAddressAvailable: data?.trustedClientAddressAvailable, locationHeaderNames: data?.locationHeaderNames,
+                geolocation: data?.geolocation, countryFallbackAvailable: data?.countryFallbackAvailable,
                 cities: data?.cities?.length, tokenIssued: !!data?.token, error: data?.error,
                 title: body.match(/<title>([^<]+)/i)?.[1] });
             } catch (error) { outputs.push({ path, error: error.message }); }
           }
           console.log(JSON.stringify({ collector: outputs }));
+          if (token && outputs[0]?.geolocationAvailable) {
+            const response = await fetch(origin + '/api/visit', { method: 'POST',
+              headers: { Origin: 'https://jameslemon2002.github.io', 'Content-Type': 'text/plain;charset=UTF-8' },
+              body: JSON.stringify({ token }), signal: AbortSignal.timeout(15000) });
+            const recorded = await response.json();
+            const readback = await (await fetch(origin + '/api/locations', { signal: AbortSignal.timeout(15000) })).json();
+            const found = readback.cities?.some(city => city.location === recorded.city?.location && city.country === recorded.city?.country);
+            console.log(JSON.stringify({ controlledTestVisit: { status: response.status, recorded: recorded.recorded === true,
+              readbackVerified: found === true, precision: recorded.city?.location?.endsWith(' (country-level)') ? 'country' : 'city' } }));
+            if (!recorded.recorded || !found) process.exitCode = 1;
+          }
           try {
             const url = 'https://mapmyvisitors.com/ajax/map?last_hit_id=0&initial_hit_id=0&initial=true&animate=false&user=0&url=%22https%3A%2F%2Fjameslemon2002.github.io%2F%22&id=2246776&mapType=widget&callback=visitorArchive';
             const response = await fetch(url, { signal: AbortSignal.timeout(15000) });

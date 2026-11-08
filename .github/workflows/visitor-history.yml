@@ -1,4 +1,4 @@
-name: Save visitor locations
+name: Back up visitor locations
 
 on:
   schedule:

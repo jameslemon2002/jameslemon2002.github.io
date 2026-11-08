@@ -433,6 +433,11 @@
       content: "";
     }
 
+    .visitor-point[data-precision="country"]::after {
+      border: 1px solid currentColor;
+      background: var(--background);
+    }
+
     .visitor-point:is(:hover, :focus-visible, [aria-pressed="true"]) {
       color: var(--text);
       z-index: 1;
@@ -635,11 +640,11 @@
       </div>
     </section>
     <section class="visitor-map-section" id="visitor-map" aria-labelledby="visitor-map-title" data-state="loading">
-      <h2 id="visitor-map-title"><a href="https://mapmyvisitors.com/web/1c5mg" target="_blank" rel="noopener noreferrer" title="View visitor statistics on MapMyVisitors">Visitors</a></h2>
+      <h2 id="visitor-map-title">Visitors</h2>
       <div class="visitor-map-stage">
         <svg class="visitor-map-world" viewBox="0 0 360 180" role="img" aria-labelledby="visitor-world-title visitor-world-description">
           <title id="visitor-world-title">World map of saved visitor locations</title>
-          <desc id="visitor-world-description">An Equal Earth world map. Dots indicate approximate city-level locations inferred from visitor IP addresses.</desc>
+          <desc id="visitor-world-description">An Equal Earth world map of approximate visitor locations. Hollow dots indicate country-level locations when a city could not be determined.</desc>
           <use class="visitor-map-land" href="assets/visitor-land.svg#land"></use>
         </svg>
         <div class="visitor-map-points" role="group" aria-label="Saved visitor locations"></div>
@@ -660,7 +665,7 @@
   </footer>
 
   <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-  <script type="module" src="assets/visitor-map.mjs?v=20261105-history"></script>
+  <script type="module" src="assets/visitor-map.mjs?v=20261109-live"></script>
 
   <script>
     (() => {

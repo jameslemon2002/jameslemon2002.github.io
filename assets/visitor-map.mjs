@@ -1,6 +1,4 @@
 const SITE_HOST = 'jameslemon2002.github.io';
-const WIDGET_KEY = 'JT_9V-adiGVBX89Jf7Bh7Kx7XH6wUPU5GFzTToZpBz4';
-const PROJECT_ID = 2246776;
 const MAP_WIDTH = 360;
 const MAP_HEIGHT = 180;
 
@@ -68,28 +66,6 @@ export function projectLocation(longitude, latitude, projection) {
     projection.translate[1] - projection.scale * y];
 }
 
-function jsonp(url, timeout = 10000) {
-  return new Promise((resolve, reject) => {
-    const callback = '__rzVisitors_' + Math.random().toString(36).slice(2);
-    const script = document.createElement('script');
-    let timer;
-    const finish = (error, value) => {
-      clearTimeout(timer);
-      script.remove();
-      delete window[callback];
-      if (error) reject(error); else resolve(value);
-    };
-    window[callback] = value => finish(null, value);
-    script.async = true;
-    script.referrerPolicy = 'origin';
-    script.onerror = () => finish(new Error('Visitor service unavailable'));
-    url.searchParams.set('callback', callback);
-    script.src = url.href;
-    timer = setTimeout(() => finish(new Error('Visitor service timed out')), timeout);
-    document.head.append(script);
-  });
-}
-
 function renderCities(section, cities, projection) {
   const points = section.querySelector('.visitor-map-points');
   const detail = section.querySelector('.visitor-map-detail');
@@ -106,6 +82,7 @@ function renderCities(section, cities, projection) {
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'visitor-point';
+    button.dataset.precision = city.location.endsWith(' (country-level)') ? 'country' : 'city';
     button.style.left = (x / MAP_WIDTH * 100) + '%';
     button.style.top = (y / MAP_HEIGHT * 100) + '%';
     button.style.setProperty('--dot-size', '5.5px');
@@ -134,69 +111,100 @@ function renderCities(section, cities, projection) {
   reset();
 }
 
+export function normalizeCities(data) {
+  if (!data || data.version !== 1 || !Array.isArray(data.cities) || data.cities.length > 20000) {
+    throw new Error('Unexpected city data');
+  }
+  return data.cities.filter(city => typeof city?.location === 'string' &&
+    city.location.length > 0 && city.location.length <= 200 &&
+    typeof city.country === 'string' && /^[A-Z]{2}$/.test(city.country) &&
+    Number.isFinite(city.latitude) && Math.abs(city.latitude) <= 90 &&
+    Number.isFinite(city.longitude) && Math.abs(city.longitude) <= 180)
+    .map(city => ({ location: city.location, country: city.country,
+      latitude: city.latitude, longitude: city.longitude }));
+}
+
+export function combineCities(saved, incoming) {
+  const cities = new Map(saved.map(city => [city.location.toLowerCase() + '|' + city.country, city]));
+  for (const city of incoming) {
+    const key = city.location.toLowerCase() + '|' + city.country;
+    if (!cities.has(key)) cities.set(key, city);
+  }
+  return [...cities.values()];
+}
+
+async function getJson(url, options = {}) {
+  const response = await fetch(url, { ...options, credentials: 'omit', cache: 'no-store',
+    signal: AbortSignal.timeout(8000) });
+  if (!response.ok) throw new Error('Visitor data unavailable');
+  return response.json();
+}
+
 async function mount(section) {
   const detail = section.querySelector('.visitor-map-detail');
   let projection;
-  let saved = [];
+  let cities = [];
   try {
-    const [projectionResponse, archiveResponse] = await Promise.all([
-      fetch(new URL('./visitor-map-projection.json', import.meta.url)),
-      fetch(new URL('./visitor-history.json', import.meta.url), { cache: 'no-cache' })
-        .catch(() => null)
+    const [projectionData, archive] = await Promise.all([
+      getJson(new URL('./visitor-map-projection.json', import.meta.url)),
+      getJson(new URL('./visitor-history.json', import.meta.url)).catch(() => null)
     ]);
-    if (!projectionResponse.ok) throw new Error('Projection unavailable');
-    projection = await projectionResponse.json();
+    projection = projectionData;
     if (!Number.isFinite(projection.scale) || projection.scale <= 0 ||
         !Array.isArray(projection.translate) || projection.translate.length !== 2 ||
         !projection.translate.every(Number.isFinite)) throw new Error('Invalid projection');
-    if (archiveResponse?.ok) {
-      const archive = await archiveResponse.json();
-      if (archive.version === 1 && Array.isArray(archive.cities)) {
-        saved = archive.cities.filter(city => typeof city.location === 'string' &&
-          city.location.length > 0 && city.location.length <= 180 &&
-          Number.isFinite(city.latitude) && Math.abs(city.latitude) <= 90 &&
-          Number.isFinite(city.longitude) && Math.abs(city.longitude) <= 180);
-      }
-    }
-    renderCities(section, saved, projection);
+    if (archive) cities = normalizeCities(archive);
+    renderCities(section, cities, projection);
   } catch {
     section.dataset.state = 'unavailable';
     detail.hidden = true;
     return;
   }
 
-  // The saved map is already visible. Register the current visit independently;
-  // a blocked or slow third party must never hide the archived city locations.
-  // Local previews can show the archive without recording test traffic.
-  if (location.hostname !== SITE_HOST) return;
+  let collector;
   try {
-    const registration = new URL('https://mapmyvisitors.com/widget_call_home.js');
-    registration.search = new URLSearchParams({ d: WIDGET_KEY, cl: 'ffffff', w: '360', t: 'm' });
-    const bootstrap = await jsonp(registration);
-    if (typeof bootstrap !== 'string' || bootstrap.length > 400000 ||
-        Number(bootstrap.match(/'project_id'\s*:\s*(\d+)/)?.[1]) !== PROJECT_ID) {
-      throw new Error('Unexpected visitor project');
+    const config = await getJson(new URL('./visitor-config.json', import.meta.url));
+    collector = new URL(config.collectorOrigin);
+    if (collector.protocol !== 'https:') throw new Error('Invalid collector');
+  } catch { return; }
+
+  const refresh = async () => {
+    try {
+      const data = await getJson(new URL('/api/locations', collector));
+      const merged = combineCities(cities, normalizeCities(data));
+      if (merged.length !== cities.length) {
+        cities = merged;
+        renderCities(section, cities, projection);
+      }
+      section.dataset.collectorState = 'ready';
+      section.dataset.checkedAt = data.checkedAt || '';
+    } catch {
+      section.dataset.collectorState = 'unavailable';
     }
-    const domain = bootstrap.match(/'domain'\s*:\s*'([^']+)'/)?.[1];
-    if (!domain || domain.replaceAll('"', '') !== 'https://' + SITE_HOST + '/') {
-      throw new Error('Unexpected visitor domain');
-    }
-    const endpoint = new URL('https://mapmyvisitors.com/ajax/map');
-    endpoint.search = new URLSearchParams({
-      last_hit_id: '0', initial_hit_id: '0', initial: 'true', animate: 'false',
-      user: '0', url: domain, id: String(PROJECT_ID), mapType: 'widget'
-    });
-    const payload = await jsonp(endpoint);
-    const cities = new Map(saved.map(city => [city.location.toLowerCase() + '|' + city.country, city]));
-    for (const city of parseLocations(payload)) {
-      const key = city.location.toLowerCase() + '|' + city.country;
-      if (!cities.has(key)) cities.set(key, city);
-    }
-    // The background response can add new locations, but cannot remove history.
-    if (cities.size !== saved.length) renderCities(section, [...cities.values()], projection);
-  } catch {
-    // The same-origin archive remains displayed; no default caption is needed.
+  };
+  void refresh();
+  if (location.hostname !== SITE_HOST) return;
+
+  // No browser identifier: only a timestamp to avoid repeating the same request
+  // on every page refresh. A missing browser store does not break the map.
+  let lastRecorded = 0;
+  try { lastRecorded = Number(localStorage.getItem('rz-map-recorded-at')) || 0; } catch {}
+  if (Date.now() - lastRecorded > 30 * 60 * 1000) {
+    try {
+      const challenge = await getJson(new URL('/api/challenge', collector));
+      const result = await getJson(new URL('/api/visit', collector), {
+        method: 'POST', headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
+        body: JSON.stringify({ token: challenge.token }), keepalive: true
+      });
+      if (result.recorded) {
+        try { localStorage.setItem('rz-map-recorded-at', String(Date.now())); } catch {}
+        section.dataset.recordingState = 'recorded';
+        await refresh();
+      }
+    } catch { section.dataset.recordingState = 'unavailable'; }
   }
+  setInterval(() => { if (!document.hidden) refresh(); }, 60000);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) refresh(); });
 }
 
 if (typeof document !== 'undefined') {
