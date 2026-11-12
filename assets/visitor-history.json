@@ -1,8 +1,15 @@
 {
   "version": 1,
   "startedOn": "2026-11-05",
-  "updatedAt": "2026-11-08T20:26:51.256Z",
+  "updatedAt": "2026-11-12T18:52:48.470Z",
   "cities": [
+    {
+      "location": "Japan (country-level)",
+      "country": "JP",
+      "latitude": 36.2,
+      "longitude": 138.3,
+      "firstSavedOn": "2026-11-12"
+    },
     {
       "location": "Los Angeles, California, United States",
       "country": "US",
