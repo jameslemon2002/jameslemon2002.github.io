@@ -1,8 +1,15 @@
 {
   "version": 1,
   "startedOn": "2026-11-05",
-  "updatedAt": "2026-11-12T18:52:48.470Z",
+  "updatedAt": "2026-11-15T17:03:40.750Z",
   "cities": [
+    {
+      "location": "Germany (country-level)",
+      "country": "DE",
+      "latitude": 51.2,
+      "longitude": 10.5,
+      "firstSavedOn": "2026-11-15"
+    },
     {
       "location": "Japan (country-level)",
       "country": "JP",
