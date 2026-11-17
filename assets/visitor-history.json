@@ -1,7 +1,7 @@
 {
   "version": 1,
   "startedOn": "2026-11-05",
-  "updatedAt": "2026-11-15T17:03:40.750Z",
+  "updatedAt": "2026-11-17T13:16:21.490Z",
   "cities": [
     {
       "location": "Germany (country-level)",
@@ -23,6 +23,13 @@
       "latitude": 34.1,
       "longitude": -118.3,
       "firstSavedOn": "2026-11-05"
+    },
+    {
+      "location": "South Korea (country-level)",
+      "country": "KR",
+      "latitude": 35.9,
+      "longitude": 127.8,
+      "firstSavedOn": "2026-11-17"
     },
     {
       "location": "Ukraine (country-level)",
