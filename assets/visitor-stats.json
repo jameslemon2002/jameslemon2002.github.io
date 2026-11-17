@@ -5,5 +5,11 @@
     "visitors": 11,
     "checkedAt": "2026-11-14T12:46:00Z"
   },
-  "current": null
+  "current": {
+    "version": 1,
+    "views": 1,
+    "visitors": 1,
+    "startedAt": "2026-11-17T15:07:42.120Z",
+    "updatedAt": "2026-11-17T15:07:42.120Z"
+  }
 }
