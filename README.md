@@ -48,11 +48,10 @@ the tab is brought forward. A browser-local timestamp limits repeat submissions
 to one per 30 minutes; no persistent visitor identifier is created. Local previews
 can display city data but do not register visits.
 
-`.github/workflows/visitor-history.yml` now only backs up the collector's cities
-to this repository. It is scheduled hourly, but GitHub may run it hours later;
-the public map's live updates do not wait for this job. Each city is stored once
-with rounded coordinates and the day it was first saved. The job requests a Pages
-rebuild after committing a changed backup. It can also be run manually in Actions.
+`.github/workflows/visitor-history.yml` backs up the collector's locations and
+counters to this repository. GitHub schedules it hourly and may run it later.
+Each city is stored once with rounded coordinates and the day it was first saved.
+The job requests a Pages rebuild after committing a changed backup.
 
 The archive starts on 2026-11-05; it is a history of city locations observed since
 then, not a complete per-visit log. Earlier expired records cannot be recovered.
@@ -66,18 +65,17 @@ Fetch errors leave the existing archive untouched; there are no sample points in
 production. Run a backup locally with `node scripts/sync-visitor-history.mjs`.
 The collector source is maintained separately in `../rong-visitor-collector`.
 
-The footer displays site-wide page views and visitor counts using the asynchronous
-[Busuanzi](https://busuanzi.ibruce.info/) widget. Counts are supplied by this external
-service and are approximate; blocked or unavailable requests may leave the numbers
-unavailable. No account, API key, or backend is required. The homepage remains
-usable when the widget cannot load.
+The footer records Views and Visitors through the site's own collector. Views
+count page loads and Visitors count distinct browser storage profiles. The footer
+labels the start date. Its latest saved values remain visible during a connection
+failure, with an “as of” date. The published JSON backup also keeps the last
+confirmed Busuanzi totals as a separate historical record. Local previews show
+the saved values. Only the published hostname registers new counts.
 
-Check the counters on the published hostname rather than localhost, where counts
-do not represent this website. Remove the Busuanzi script and the `visitor-stats`
-paragraph in `index.html` to disable the counters. Remove the `visitor-map-section`
-section and the `visitor-map.mjs` script tag to disable geographic tracking, and
-disable the Back up visitor locations workflow to stop backups. The map and
-counters use separate providers and reporting windows.
+Remove the `visitor-stats.mjs` script and footer paragraph in `index.html` to
+disable visitor counts. Remove the visitor map section and its script tag to
+disable geographic tracking. Disable the Back up visitor data workflow to stop
+repository backups.
 
 Run parser, projection and history checks with `node --test test/*.test.mjs`.
 Third-party geometry and projection notices are in `assets/visitor-map.LICENSE.txt`.

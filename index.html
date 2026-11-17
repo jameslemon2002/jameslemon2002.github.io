@@ -367,6 +367,10 @@
       font-variant-numeric: tabular-nums;
     }
 
+    .visitor-stats time {
+      white-space: nowrap;
+    }
+
     .visitor-map-section {
       width: min(360px, 100%);
       margin-inline: auto;
@@ -656,15 +660,16 @@
   <footer class="site-footer">
     <div class="shell footer-row">
       <p>© 2026 Rong Zhao</p>
-      <p class="visitor-stats" aria-label="Site visitor statistics" title="Visitor statistics provided by Busuanzi">
-        <span id="busuanzi_container_site_pv">Views: <span id="busuanzi_value_site_pv">—</span></span>
-        <span id="busuanzi_container_site_uv">Visitors: <span id="busuanzi_value_site_uv">—</span></span>
+      <p class="visitor-stats" id="visitor-stats" aria-label="Site visitor statistics" data-source="archive">
+        <span>Views: <span id="site-views">37</span></span>
+        <span>Visitors: <span id="site-visitors">11</span></span>
+        <time datetime="2026-11-14T12:46:00Z">as of Nov 14</time>
       </p>
       <a href="#top">Back to top</a>
     </div>
   </footer>
 
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <script type="module" src="assets/visitor-stats.mjs"></script>
   <script type="module" src="assets/visitor-map.mjs?v=20261109-live"></script>
 
   <script>

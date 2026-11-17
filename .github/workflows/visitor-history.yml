@@ -1,6 +1,6 @@
-name: Back up visitor locations
+name: Back up visitor data
 
-# Live map reads the collector directly; this job only keeps a repository backup.
+# The homepage reads live data directly. These files also serve as fallbacks.
 
 on:
   schedule:
@@ -11,6 +11,7 @@ on:
     paths:
       - '.github/workflows/visitor-history.yml'
       - 'scripts/sync-visitor-history.mjs'
+      - 'scripts/sync-visitor-stats.mjs'
 
 permissions:
   contents: write
@@ -34,17 +35,23 @@ jobs:
       - name: Check parser and archive merging
         run: node --test test/*.test.mjs
       - name: Save newly observed cities
+        id: cities
+        continue-on-error: true
         run: node scripts/sync-visitor-history.mjs
+      - name: Save current visitor totals
+        id: counters
+        continue-on-error: true
+        run: node scripts/sync-visitor-stats.mjs
       - name: Commit history when it changes
         id: save
         run: |
-          if git diff --quiet -- assets/visitor-history.json; then
+          if git diff --quiet -- assets/visitor-history.json assets/visitor-stats.json; then
             echo 'changed=false' >> "$GITHUB_OUTPUT"
           else
             git config user.name 'github-actions[bot]'
             git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-            git add assets/visitor-history.json
-            git commit -m 'Save newly observed visitor cities'
+            git add assets/visitor-history.json assets/visitor-stats.json
+            git commit -m 'Back up visitor map and counters'
             git push origin HEAD:main
             echo 'changed=true' >> "$GITHUB_OUTPUT"
           fi
@@ -55,3 +62,6 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh api --method POST "repos/$GITHUB_REPOSITORY/pages/builds" --jq '.status'
+      - name: Report failed backups
+        if: steps.cities.outcome == 'failure' || steps.counters.outcome == 'failure'
+        run: exit 1
