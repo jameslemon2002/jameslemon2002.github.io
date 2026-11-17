@@ -1,8 +1,15 @@
 {
   "version": 1,
   "startedOn": "2026-11-05",
-  "updatedAt": "2026-11-17T13:16:21.490Z",
+  "updatedAt": "2026-11-17T22:17:24.388Z",
   "cities": [
+    {
+      "location": "Australia (country-level)",
+      "country": "AU",
+      "latitude": -25.3,
+      "longitude": 133.8,
+      "firstSavedOn": "2026-11-17"
+    },
     {
       "location": "Germany (country-level)",
       "country": "DE",
