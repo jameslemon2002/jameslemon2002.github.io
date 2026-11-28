@@ -1,7 +1,7 @@
 {
   "version": 1,
   "startedOn": "2026-11-05",
-  "updatedAt": "2026-11-17T22:17:24.388Z",
+  "updatedAt": "2026-11-28T10:18:55.725Z",
   "cities": [
     {
       "location": "Australia (country-level)",
@@ -37,6 +37,13 @@
       "latitude": 35.9,
       "longitude": 127.8,
       "firstSavedOn": "2026-11-17"
+    },
+    {
+      "location": "Taiwan (country-level)",
+      "country": "TW",
+      "latitude": 23.7,
+      "longitude": 121,
+      "firstSavedOn": "2026-11-28"
     },
     {
       "location": "Ukraine (country-level)",
